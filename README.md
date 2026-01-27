@@ -1,52 +1,120 @@
 # CRA-AuditFlow
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-![Status: Proof of Concept](https://img.shields.io/badge/Status-Proof_of_Concept-orange)
+[![CI](https://github.com/MichaelLod/CRA-AuditFlow/actions/workflows/ci.yml/badge.svg)](https://github.com/MichaelLod/CRA-AuditFlow/actions)
+![Status: MVP](https://img.shields.io/badge/Status-MVP-green)
 
-A CLI toolkit for automating EU Cyber Resilience Act (CRA) compliance — built for SMEs and solo developers.
+**The sovereign bridge to EU Cyber Resilience Act compliance.**
 
-## Overview
+A Rust CLI that ingests your SBOM, checks components against known vulnerabilities, classifies your product under CRA Annex III/IV risk tiers, and generates a compliance report — entirely offline, with no telemetry.
 
-The EU Cyber Resilience Act becomes mandatory in September 2026 for nearly all software products sold in the European market. Compliance requires extensive technical documentation (Article 18), risk classification against critical component lists (Annex III/IV), and ongoing vulnerability handling. CRA-AuditFlow automates documentation generation, vulnerability mapping, and risk classification through an offline-first CLI with no telemetry.
+Built for SMEs, solo developers, and anyone who needs CRA readiness without handing their supply chain data to a third party.
 
-## Features
+## Why This Exists
 
-- **SBOM Management** — CycloneDX/SPDX ingestion and validation
-- **Vulnerability Mapping** — Local cross-referencing against CERT-EU and EUVD advisories
-- **Risk-Class Classifier** — Annex III/IV critical component flagging
-- **VEX Engine** — Document CVE non-applicability per Article 10
-- **Article 18 Reports** — Automated Technical Documentation for CE-marking
+By September 2026, the EU Cyber Resilience Act (CRA) becomes mandatory for nearly all software products sold in the European market. Article 18 demands technical documentation, Annexes III and IV define critical product categories with stricter conformity requirements, and Article 10 requires ongoing vulnerability handling.
 
-## Architecture
+For large enterprises with compliance departments, this is business as usual. For everyone else, the bureaucratic burden is immense. CRA-AuditFlow automates the heavy lifting so you can focus on building software.
 
-- **Language:** Rust (memory safety, performance)
-- **Privacy:** Offline-first, no telemetry, air-gap compatible
-- **Integrations:** CLI-first with CI/CD pipeline support (GitHub Actions, GitLab CI)
+## What Works Today
 
-## Getting Started
+The MVP delivers a complete end-to-end pipeline:
 
-> Project is in Proof of Concept phase. Build and install instructions will be added as the CLI takes shape.
+- **SBOM Ingestion** — Parse CycloneDX and SPDX JSON files, auto-detecting the format
+- **Vulnerability Matching** — Offline lookup against an OSV-sourced SQLite database, matching by PURL and ecosystem+name with version filtering
+- **CRA Risk Classification** — 26 product categories from Annexes III and IV, keyword-matched against your product name and description to determine Default, Class I, Class II, or Critical risk tier
+- **Compliance Reports** — Markdown or plaintext output with risk classification, vulnerability findings by component, and SBOM overview
+
+No network calls during audit. The only command that touches the network is `vuln update`, which downloads public OSV data on your terms.
+
+## Quick Start
 
 ### Prerequisites
 
 - Rust toolchain (stable)
 
-### Build from source
+### Build and install
 
 ```sh
-git clone https://github.com/yourusername/CRA-AuditFlow.git
+git clone https://github.com/MichaelLod/CRA-AuditFlow.git
 cd CRA-AuditFlow
-cargo build
+cargo build --release
 ```
 
-## Roadmap
+### Download vulnerability data
 
-See [ROADMAP.md](ROADMAP.md) for development milestones and timeline.
+```sh
+cargo run --release -- vuln update
+```
+
+This downloads OSV vulnerability records for npm, PyPI, Maven, crates.io, Go, NuGet, and RubyGems into a local SQLite database. Run it once, then update periodically.
+
+### Run an audit
+
+```sh
+cargo run --release -- audit my-sbom.json -n "My Product" -d "a web application"
+```
+
+This parses your SBOM, matches components against the local vulnerability database, classifies your product under CRA rules, and prints a Markdown compliance report to stdout.
+
+### Validate an SBOM
+
+```sh
+cargo run --release -- sbom validate my-sbom.json
+```
+
+### Check database status
+
+```sh
+cargo run --release -- vuln status
+```
+
+### Full CLI reference
+
+```
+cra-auditflow audit <SBOM_FILE> [OPTIONS]
+  -n, --product-name <NAME>       Product name for the report
+  -d, --description <DESC>        Product description (used for CRA classification)
+  -f, --format <FORMAT>           Report format: markdown or plaintext [default: markdown]
+  -o, --output <FILE>             Write report to file instead of stdout
+      --rules <PATH>              Custom CRA classification rules TOML
+
+cra-auditflow sbom validate <SBOM_FILE>
+
+cra-auditflow vuln update [--ecosystems npm,pypi,...]
+cra-auditflow vuln status
+
+Global options:
+      --db-path <PATH>            Custom vulnerability database path
+  -v, --verbose                   Increase logging verbosity (-v, -vv, -vvv)
+```
+
+## Architecture
+
+- **Language:** Rust — memory safety by default, directly aligned with CRA's security-by-design mandate
+- **Privacy:** No telemetry, no cloud sync. Operates fully offline or within air-gapped environments
+- **Storage:** Embedded SQLite via rusqlite (bundled), zero external database dependencies
+- **SBOM Parsing:** Raw `serde_json::Value` extraction — no dependency on spec-version-locked ecosystem crates
+- **Classification Rules:** TOML-based, embedded at compile time, overridable at runtime
+
+## Vision
+
+The MVP is the foundation. The roadmap toward September 2026 includes:
+
+- **CERT-EU & EUVD Integration** — European vulnerability sources alongside OSV
+- **VEX Engine** — Structured workflow for documenting why a CVE does not affect your product (Article 10)
+- **Article 18 Documentation** — Automated generation of the Technical Documentation required for CE-marking
+- **CI/CD Integration** — GitHub Actions, GitLab CI, and Forgejo/Codeberg pipeline templates with policy-as-code gating
+- **SARIF Output** — Feed findings into code scanning dashboards
+
+See [ROADMAP.md](ROADMAP.md) for the full development timeline.
 
 ## Contributing
 
-Open an Issue for feature requests or bug reports. PRs welcome.
+Contributions that advance CRA compliance tooling are welcome. Check the [ROADMAP.md](ROADMAP.md) for development priorities, or open an Issue for feature requests and bug reports.
 
 ## License
 
 Apache License 2.0 — see [LICENSE](LICENSE).
+
+*Developed by Michael Lodzik*
