@@ -21,3 +21,6 @@ Cargo.lock
 # Editor backups
 *.bak
 *.orig
+
+# Generated test artifacts
+test-sboms/
