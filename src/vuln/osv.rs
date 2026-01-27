@@ -130,13 +130,10 @@ fn parse_severity(val: &serde_json::Value) -> Option<Severity> {
     let score_str = val.get("score").and_then(|v| v.as_str());
     let vector = score_str.map(String::from);
 
-    let score = val
-        .get("score")
-        .and_then(|v| v.as_f64())
-        .or_else(|| {
-            let s = score_str?;
-            compute_cvss3_base_score(s).or_else(|| s.parse::<f64>().ok())
-        });
+    let score = val.get("score").and_then(|v| v.as_f64()).or_else(|| {
+        let s = score_str?;
+        compute_cvss3_base_score(s).or_else(|| s.parse::<f64>().ok())
+    });
 
     Some(Severity {
         score,
