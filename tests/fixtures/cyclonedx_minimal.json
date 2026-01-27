@@ -1,0 +1,64 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "metadata": {
+    "component": {
+      "name": "my-application",
+      "version": "1.0.0",
+      "type": "application"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "name": "serde",
+      "version": "1.0.200",
+      "purl": "pkg:cargo/serde@1.0.200",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "supplier": {
+        "name": "David Tolnay"
+      },
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "abc123def456"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "lodash",
+      "version": "4.17.21",
+      "purl": "pkg:npm/lodash@4.17.21",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "type": "framework",
+      "name": "spring-boot",
+      "version": "3.2.0",
+      "purl": "pkg:maven/org.springframework.boot/spring-boot@3.2.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "supplier": {
+        "name": "VMware"
+      }
+    }
+  ]
+}
