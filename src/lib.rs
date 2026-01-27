@@ -1,1 +1,6 @@
+pub mod classifier;
+pub mod cli;
 pub mod models;
+pub mod report;
+pub mod sbom;
+pub mod vuln;
