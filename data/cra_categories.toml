@@ -1,0 +1,253 @@
+# CRA Product Categories from Annexes III and IV
+# Source: EU Cyber Resilience Act (Regulation 2024/2847)
+#
+# Risk classes:
+#   - "class_i"  = Important (Class I) -- Annex III, Part I
+#   - "class_ii" = Important (Class II) -- Annex III, Part II
+#   - "critical" = Critical -- Annex IV
+
+# ─────────────────────────────────────────────
+# Annex III, Part I -- Important (Class I)
+# ─────────────────────────────────────────────
+
+[[category]]
+id = "class1_identity_management"
+annex = "III"
+class = "class_i"
+name = "Identity management systems and privileged access management software"
+keywords = ["identity management", "privileged access", "IAM", "PAM", "single sign-on", "SSO", "LDAP", "active directory"]
+conformity_note = "Self-assessment or harmonised standards (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part I (1)"]
+
+[[category]]
+id = "class1_browsers"
+annex = "III"
+class = "class_i"
+name = "Standalone and embedded browsers"
+keywords = ["browser", "web browser", "chromium", "webkit", "gecko", "embedded browser"]
+conformity_note = "Self-assessment or harmonised standards (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part I (2)"]
+
+[[category]]
+id = "class1_password_managers"
+annex = "III"
+class = "class_i"
+name = "Password managers"
+keywords = ["password manager", "credential manager", "password vault", "keychain", "secret manager"]
+conformity_note = "Self-assessment or harmonised standards (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part I (3)"]
+
+[[category]]
+id = "class1_malware_detection"
+annex = "III"
+class = "class_i"
+name = "Software that searches for, removes, or quarantines malicious software"
+keywords = ["antivirus", "anti-malware", "malware detection", "endpoint protection", "EDR", "antimalware"]
+conformity_note = "Self-assessment or harmonised standards (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part I (4)"]
+
+[[category]]
+id = "class1_vpn"
+annex = "III"
+class = "class_i"
+name = "Products with VPN functionality"
+keywords = ["VPN", "virtual private network", "wireguard", "openvpn", "IPsec", "tunnel"]
+conformity_note = "Self-assessment or harmonised standards (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part I (5)"]
+
+[[category]]
+id = "class1_network_management"
+annex = "III"
+class = "class_i"
+name = "Network management systems"
+keywords = ["network management", "SNMP", "network monitoring", "NMS", "network orchestration"]
+conformity_note = "Self-assessment or harmonised standards (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part I (6)"]
+
+[[category]]
+id = "class1_siem"
+annex = "III"
+class = "class_i"
+name = "Security information and event management (SIEM) systems"
+keywords = ["SIEM", "security event", "security information", "log aggregation", "security analytics"]
+conformity_note = "Self-assessment or harmonised standards (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part I (7)"]
+
+[[category]]
+id = "class1_boot_managers"
+annex = "III"
+class = "class_i"
+name = "Boot managers"
+keywords = ["boot manager", "bootloader", "GRUB", "UEFI boot", "secure boot", "boot loader"]
+conformity_note = "Self-assessment or harmonised standards (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part I (8)"]
+
+[[category]]
+id = "class1_pki"
+annex = "III"
+class = "class_i"
+name = "Public key infrastructure and digital certificate issuance software"
+keywords = ["PKI", "certificate authority", "digital certificate", "X.509", "TLS certificate", "public key infrastructure"]
+conformity_note = "Self-assessment or harmonised standards (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part I (9)"]
+
+[[category]]
+id = "class1_os"
+annex = "III"
+class = "class_i"
+name = "Operating systems"
+keywords = ["operating system", "OS kernel", "Linux distribution", "Windows OS", "macOS", "FreeBSD"]
+conformity_note = "Self-assessment or harmonised standards (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part I (10)"]
+
+[[category]]
+id = "class1_routers"
+annex = "III"
+class = "class_i"
+name = "Routers and modems intended for connection to the internet"
+keywords = ["router", "modem", "gateway", "access point", "CPE", "home router", "network gateway"]
+conformity_note = "Self-assessment or harmonised standards (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part I (11)"]
+
+[[category]]
+id = "class1_microprocessors"
+annex = "III"
+class = "class_i"
+name = "Microprocessors with general-purpose security functionalities"
+keywords = ["microprocessor", "secure enclave", "TPM", "trusted platform", "security processor"]
+conformity_note = "Self-assessment or harmonised standards (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part I (12)"]
+
+[[category]]
+id = "class1_microcontrollers"
+annex = "III"
+class = "class_i"
+name = "Microcontrollers with security functionalities"
+keywords = ["microcontroller", "MCU", "secure MCU", "embedded controller"]
+conformity_note = "Self-assessment or harmonised standards (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part I (13)"]
+
+[[category]]
+id = "class1_asic_fpga"
+annex = "III"
+class = "class_i"
+name = "Application-specific integrated circuits (ASICs) and FPGAs with security functionalities"
+keywords = ["ASIC", "FPGA", "programmable logic", "security ASIC", "hardware security"]
+conformity_note = "Self-assessment or harmonised standards (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part I (14)"]
+
+[[category]]
+id = "class1_smart_home"
+annex = "III"
+class = "class_i"
+name = "Smart home general-purpose virtual assistants"
+keywords = ["smart home", "virtual assistant", "home automation", "smart speaker", "voice assistant", "IoT hub"]
+conformity_note = "Self-assessment or harmonised standards (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part I (15)"]
+
+[[category]]
+id = "class1_smart_home_security"
+annex = "III"
+class = "class_i"
+name = "Smart home products with security functionalities (door locks, cameras, baby monitors)"
+keywords = ["smart lock", "smart camera", "baby monitor", "security camera", "smart doorbell", "smart alarm"]
+conformity_note = "Self-assessment or harmonised standards (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part I (16)"]
+
+[[category]]
+id = "class1_wearables"
+annex = "III"
+class = "class_i"
+name = "Internet-connected toys and wearable health-monitoring products"
+keywords = ["smart toy", "connected toy", "wearable", "health monitor", "fitness tracker", "smartwatch"]
+conformity_note = "Self-assessment or harmonised standards (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part I (17)"]
+
+[[category]]
+id = "class1_industrial_iot"
+annex = "III"
+class = "class_i"
+name = "Industrial automation and control systems (IACS) products"
+keywords = ["IACS", "industrial automation", "SCADA", "PLC", "industrial control", "OT security", "ICS"]
+conformity_note = "Self-assessment or harmonised standards (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part I (18)"]
+
+[[category]]
+id = "class1_industrial_iot_safety"
+annex = "III"
+class = "class_i"
+name = "Industrial IoT products not covered by other EU legislation with safety impact"
+keywords = ["industrial IoT", "IIoT", "industrial sensor", "industrial gateway"]
+conformity_note = "Self-assessment or harmonised standards (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part I (19)"]
+
+# ─────────────────────────────────────────────
+# Annex III, Part II -- Important (Class II)
+# ─────────────────────────────────────────────
+
+[[category]]
+id = "class2_hypervisors"
+annex = "III"
+class = "class_ii"
+name = "Hypervisors and container runtime systems supporting virtualised execution"
+keywords = ["hypervisor", "container runtime", "docker", "containerd", "podman", "VMware", "KVM", "Xen", "virtualisation"]
+conformity_note = "Third-party assessment required or harmonised standards with self-assessment (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part II (1)"]
+
+[[category]]
+id = "class2_firewalls"
+annex = "III"
+class = "class_ii"
+name = "Firewalls, intrusion detection and prevention systems (IDS/IPS)"
+keywords = ["firewall", "IDS", "IPS", "intrusion detection", "intrusion prevention", "network firewall", "WAF", "web application firewall"]
+conformity_note = "Third-party assessment required or harmonised standards with self-assessment (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part II (2)"]
+
+[[category]]
+id = "class2_tamper_resistant_microprocessors"
+annex = "III"
+class = "class_ii"
+name = "Tamper-resistant microprocessors"
+keywords = ["tamper-resistant", "tamper resistant microprocessor", "secure element", "hardware security module"]
+conformity_note = "Third-party assessment required or harmonised standards with self-assessment (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part II (3)"]
+
+[[category]]
+id = "class2_tamper_resistant_microcontrollers"
+annex = "III"
+class = "class_ii"
+name = "Tamper-resistant microcontrollers"
+keywords = ["tamper-resistant microcontroller", "tamper resistant MCU"]
+conformity_note = "Third-party assessment required or harmonised standards with self-assessment (Article 32)"
+applicable_articles = ["Article 32", "Annex III Part II (4)"]
+
+# ─────────────────────────────────────────────
+# Annex IV -- Critical
+# ─────────────────────────────────────────────
+
+[[category]]
+id = "critical_hsm"
+annex = "IV"
+class = "critical"
+name = "Hardware security modules (HSMs), security boxes, and crypto gateways"
+keywords = ["HSM", "hardware security module", "security box", "crypto gateway", "key management appliance"]
+conformity_note = "European cybersecurity certification required (Article 32(6))"
+applicable_articles = ["Article 32(6)", "Annex IV (1)"]
+
+[[category]]
+id = "critical_smart_meter_gateways"
+annex = "IV"
+class = "critical"
+name = "Smart meter gateways and other devices for advanced security purposes within smart metering"
+keywords = ["smart meter gateway", "smart metering", "meter gateway", "AMI gateway", "advanced metering"]
+conformity_note = "European cybersecurity certification required (Article 32(6))"
+applicable_articles = ["Article 32(6)", "Annex IV (2)"]
+
+[[category]]
+id = "critical_smartcards"
+annex = "IV"
+class = "critical"
+name = "Smartcards or similar devices, including secure elements"
+keywords = ["smartcard", "smart card", "secure element", "eSIM", "UICC", "SIM card", "eID card"]
+conformity_note = "European cybersecurity certification required (Article 32(6))"
+applicable_articles = ["Article 32(6)", "Annex IV (3)"]
