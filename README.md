@@ -41,7 +41,7 @@ The audit classifies the product under CRA Annex III and surfaces real advisorie
 |----|---------|----------|-------|----------|--------|
 | [GHSA-xvch-5gv4-984h](https://osv.dev/vulnerability/GHSA-xvch-5gv4-984h) | CVE-2021-44906 | CRITICAL | 9.8 | 1.2.6, 0.2.4 | Prototype Pollution in minimist |
 | [GHSA-r683-j2x4-v87g](https://osv.dev/vulnerability/GHSA-r683-j2x4-v87g) | CVE-2022-0235 | HIGH | 8.8 | 3.1.1, 2.6.7 | node-fetch forwards secure headers to untrusted sites |
-| [GHSA-35jh-r3h4-6jhm](https://osv.dev/vulnerability/GHSA-35jh-r3h4-6jhm) | CVE-2021-23337 | HIGH | 7.2 | 4.17.21 | Command Injection in lodash |
+| [GHSA-35jh-r3h4-6jhm](https://osv.dev/vulnerability/GHSA-35jh-r3h4-6jhm) | CVE-2021-23337, CVE-2026-4800 | HIGH | 7.2 | 4.17.21 | Command Injection in lodash |
 
 → See the full generated report: **[examples/demo-report.md](examples/demo-report.md)**
 
