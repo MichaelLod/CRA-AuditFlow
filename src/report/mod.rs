@@ -36,3 +36,38 @@ pub fn render(assessment: &AuditAssessment, format: ReportFormat) -> String {
         ReportFormat::Plaintext => plaintext::render(assessment),
     }
 }
+
+/// Truncate to at most `max` characters (not bytes), appending "..." when cut.
+/// Slicing by bytes would panic on multi-byte UTF-8 in advisory summaries.
+pub(crate) fn truncate_chars(s: &str, max: usize) -> String {
+    if s.chars().count() <= max {
+        s.to_string()
+    } else {
+        let cut: String = s.chars().take(max.saturating_sub(3)).collect();
+        format!("{}...", cut.trim_end())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::truncate_chars;
+
+    #[test]
+    fn truncate_short_string_unchanged() {
+        assert_eq!(truncate_chars("hello", 10), "hello");
+    }
+
+    #[test]
+    fn truncate_long_string_appends_ellipsis() {
+        assert_eq!(truncate_chars("abcdefghij", 8), "abcde...");
+    }
+
+    #[test]
+    fn truncate_multibyte_does_not_panic() {
+        // 'é' is 2 bytes in UTF-8; byte slicing here would panic.
+        let s = "é".repeat(100);
+        let out = truncate_chars(&s, 10);
+        assert!(out.ends_with("..."));
+        assert_eq!(out.chars().count(), 10);
+    }
+}

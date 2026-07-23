@@ -132,12 +132,12 @@ pub fn render(assessment: &AuditAssessment) -> String {
                     .max_score()
                     .map(|s| format!("{s:.1}"))
                     .unwrap_or_else(|| "N/A".into());
-                let summary = vuln.summary.as_deref().unwrap_or("No description");
-                let truncated = if summary.len() > 60 {
-                    format!("{}...", &summary[..57])
-                } else {
-                    summary.to_string()
-                };
+                let summary = vuln
+                    .summary
+                    .as_deref()
+                    .unwrap_or("No description")
+                    .replace('\n', " ");
+                let truncated = super::truncate_chars(&summary, 60);
 
                 out.push_str(&format!(
                     "    [{:8}] {:>5}  {}  {}\n",
@@ -146,6 +146,12 @@ pub fn render(assessment: &AuditAssessment) -> String {
                     vuln.id,
                     truncated
                 ));
+
+                let fixed =
+                    vuln.fixed_versions_for(&finding.component_name, finding.purl.as_deref());
+                if !fixed.is_empty() {
+                    out.push_str(&format!("               fixed in: {}\n", fixed.join(", ")));
+                }
             }
         }
         out.push('\n');

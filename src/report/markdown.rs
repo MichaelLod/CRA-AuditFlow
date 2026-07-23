@@ -88,27 +88,41 @@ pub fn render(assessment: &AuditAssessment) -> String {
                 out.push_str(&format!("PURL: `{purl}`\n\n"));
             }
 
-            out.push_str("| ID | Severity | Score | Summary |\n");
-            out.push_str("|----|----------|-------|---------|\n");
+            out.push_str("| ID | Aliases | Severity | Score | Fixed in | Summary |\n");
+            out.push_str("|----|---------|----------|-------|----------|--------|\n");
 
             for vuln in &finding.vulnerabilities {
                 let score_str = vuln
                     .max_score()
                     .map(|s| format!("{s:.1}"))
                     .unwrap_or_else(|| "N/A".into());
-                let summary = vuln.summary.as_deref().unwrap_or("No description");
-                let truncated = if summary.len() > 80 {
-                    format!("{}...", &summary[..77])
+
+                let aliases = vuln.cve_aliases();
+                let aliases_str = if aliases.is_empty() {
+                    "—".to_string()
                 } else {
-                    summary.to_string()
+                    aliases.join(", ")
                 };
 
+                let fixed =
+                    vuln.fixed_versions_for(&finding.component_name, finding.purl.as_deref());
+                let fixed_str = if fixed.is_empty() {
+                    "—".to_string()
+                } else {
+                    fixed.join(", ")
+                };
+
+                let summary = vuln
+                    .summary
+                    .as_deref()
+                    .unwrap_or("No description")
+                    .replace('\n', " ");
+                let truncated = super::truncate_chars(&summary, 80).replace('|', "\\|");
+
                 out.push_str(&format!(
-                    "| {} | {} | {} | {} |\n",
-                    vuln.id,
-                    vuln.severity_label(),
-                    score_str,
-                    truncated
+                    "| [{id}](https://osv.dev/vulnerability/{id}) | {aliases_str} | {label} | {score_str} | {fixed_str} | {truncated} |\n",
+                    id = vuln.id,
+                    label = vuln.severity_label(),
                 ));
             }
             out.push('\n');

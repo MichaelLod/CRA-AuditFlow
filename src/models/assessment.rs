@@ -138,6 +138,7 @@ mod tests {
                     affected: vec![],
                     references: vec![],
                     modified: String::new(),
+                    withdrawn: None,
                 },
                 VulnRecord {
                     id: "CVE-2025-0002".into(),
@@ -151,6 +152,7 @@ mod tests {
                     affected: vec![],
                     references: vec![],
                     modified: String::new(),
+                    withdrawn: None,
                 },
             ],
         }];

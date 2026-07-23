@@ -36,6 +36,7 @@ fn seed_test_db() -> VulnDb {
             }],
             references: vec![],
             modified: "2025-01-01T00:00:00Z".into(),
+            withdrawn: None,
         },
         VulnRecord {
             id: "GHSA-spring-rce".into(),
@@ -60,6 +61,7 @@ fn seed_test_db() -> VulnDb {
             }],
             references: vec![],
             modified: "2025-02-01T00:00:00Z".into(),
+            withdrawn: None,
         },
     ];
     db.upsert_records(&records).unwrap();

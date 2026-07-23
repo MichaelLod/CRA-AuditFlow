@@ -11,7 +11,8 @@ use super::VulnError;
 /// Strategy:
 /// 1. Try PURL match first (most precise).
 /// 2. Fall back to ecosystem + name match.
-/// 3. Filter results by version (if component has a version).
+/// 3. Drop advisories withdrawn upstream.
+/// 4. Filter results by version (if component has a version).
 pub fn find_vulnerabilities(
     db: &VulnDb,
     component: &Component,
@@ -37,6 +38,9 @@ pub fn find_vulnerabilities(
             candidates.extend(found);
         }
     }
+
+    // Withdrawn advisories are no longer valid findings
+    candidates.retain(|vuln| vuln.withdrawn.is_none());
 
     // Filter by version if available
     if let Some(version) = &component.version {
@@ -238,6 +242,7 @@ mod tests {
             }],
             references: vec![],
             modified: "2025-01-01T00:00:00Z".into(),
+            withdrawn: None,
         };
         db.upsert_records(&[record]).unwrap();
         db
@@ -299,6 +304,43 @@ mod tests {
 
         let vulns = find_vulnerabilities(&db, &component).unwrap();
         assert_eq!(vulns.len(), 1);
+    }
+
+    #[test]
+    fn withdrawn_advisory_excluded() {
+        let mut db = VulnDb::open_in_memory().unwrap();
+        let record = VulnRecord {
+            id: "GHSA-withdrawn-0001".into(),
+            aliases: vec![],
+            summary: Some("Later disputed and withdrawn".into()),
+            severity: vec![],
+            affected: vec![AffectedPackage {
+                ecosystem: Some("npm".into()),
+                name: "lodash".into(),
+                purl: Some("pkg:npm/lodash".into()),
+                versions: vec!["4.17.20".into()],
+                ranges: vec![],
+            }],
+            references: vec![],
+            modified: "2025-01-01T00:00:00Z".into(),
+            withdrawn: Some("2025-03-01T00:00:00Z".into()),
+        };
+        db.upsert_records(&[record]).unwrap();
+
+        let component = Component {
+            name: "lodash".into(),
+            version: Some("4.17.20".into()),
+            supplier: None,
+            license: None,
+            purl: Some("pkg:npm/lodash@4.17.20".into()),
+            cpe: None,
+            component_type: ComponentType::Library,
+            ecosystem: Some("npm".into()),
+            sha256: None,
+        };
+
+        let vulns = find_vulnerabilities(&db, &component).unwrap();
+        assert!(vulns.is_empty());
     }
 
     #[test]
@@ -387,6 +429,7 @@ mod tests {
             }],
             references: vec![],
             modified: "2025-01-01T00:00:00Z".into(),
+            withdrawn: None,
         };
         // v16.0.3 is above the fix — not affected
         assert!(!is_version_affected(
@@ -420,6 +463,7 @@ mod tests {
             }],
             references: vec![],
             modified: "2025-01-01T00:00:00Z".into(),
+            withdrawn: None,
         };
         // @types/react-dom should NOT match react-dom advisory
         assert!(!is_version_affected(

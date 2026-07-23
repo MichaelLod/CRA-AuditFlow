@@ -101,15 +101,26 @@ fn sbom_validate_spdx() {
         .stderr(predicate::str::contains("SBOM is valid"));
 }
 
+/// Audit tests pass an explicit (nonexistent) --db-path so they exercise the
+/// "no vulnerability database" path deterministically instead of picking up
+/// whatever database exists on the developer's machine.
+fn audit_cmd(dir: &tempfile::TempDir) -> Command {
+    let mut c = cmd();
+    c.args([
+        "audit",
+        "tests/fixtures/cyclonedx_minimal.json",
+        "-n",
+        "TestApp",
+        "--db-path",
+    ])
+    .arg(dir.path().join("empty.db"));
+    c
+}
+
 #[test]
 fn audit_produces_markdown_output() {
-    cmd()
-        .args([
-            "audit",
-            "tests/fixtures/cyclonedx_minimal.json",
-            "-n",
-            "TestApp",
-        ])
+    let dir = tempfile::tempdir().unwrap();
+    audit_cmd(&dir)
         .assert()
         .success()
         .stdout(predicate::str::contains("# CRA Compliance Audit Report"));
@@ -117,15 +128,9 @@ fn audit_produces_markdown_output() {
 
 #[test]
 fn audit_produces_plaintext_output() {
-    cmd()
-        .args([
-            "audit",
-            "tests/fixtures/cyclonedx_minimal.json",
-            "-n",
-            "TestApp",
-            "-f",
-            "plaintext",
-        ])
+    let dir = tempfile::tempdir().unwrap();
+    audit_cmd(&dir)
+        .args(["-f", "plaintext"])
         .assert()
         .success()
         .stdout(predicate::str::contains("CRA COMPLIANCE AUDIT REPORT"));
@@ -136,14 +141,8 @@ fn audit_with_output_file() {
     let dir = tempfile::tempdir().unwrap();
     let output_path = dir.path().join("report.md");
 
-    cmd()
-        .args([
-            "audit",
-            "tests/fixtures/cyclonedx_minimal.json",
-            "-n",
-            "TestApp",
-            "-o",
-        ])
+    audit_cmd(&dir)
+        .arg("-o")
         .arg(&output_path)
         .assert()
         .success()

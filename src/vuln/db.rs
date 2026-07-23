@@ -210,6 +210,7 @@ mod tests {
                 url: "https://example.com/advisory".into(),
             }],
             modified: "2025-01-01T00:00:00Z".into(),
+            withdrawn: None,
         }
     }
 

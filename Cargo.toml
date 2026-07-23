@@ -2,10 +2,12 @@
 name = "cra-auditflow"
 version = "0.1.0"
 edition = "2021"
-description = "CRA compliance pipeline: Ingest SBOM, check vulnerabilities, classify risk, generate report"
+description = "Offline EU Cyber Resilience Act compliance auditor: ingest SBOM, match vulnerabilities, classify CRA risk, generate report"
 license = "Apache-2.0"
-repository = "https://github.com/mlodzik/CRA-AuditFlow"
+repository = "https://github.com/MichaelLod/CRA-AuditFlow"
 readme = "README.md"
+keywords = ["cra", "sbom", "compliance", "security", "vulnerability"]
+categories = ["command-line-utilities", "development-tools"]
 
 [dependencies]
 clap = { version = "4", features = ["derive"] }
